@@ -7,14 +7,17 @@ A full-stack web application for managing an automobile spare parts shop.
 ## Tech Stack
 
 ### Frontend
+
 - React
 - Vite
 
 ### Backend
+
 - Node.js
 - Express (Coming Soon)
 
 ### Database
+
 - PostgreSQL (Coming Soon)
 
 ## Project Structure
