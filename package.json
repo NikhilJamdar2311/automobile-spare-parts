@@ -2,6 +2,10 @@
     "name": "automobile-spare-parts",
     "version": "1.0.0",
     "private": true,
+    "packageManager": "npm@11.6.2",
+    "engines": {
+        "node": ">=24"
+    },
     "description": "Automobile Spare Parts Management System",
     "workspaces": [
         "frontend",
@@ -11,11 +15,13 @@
         "dev": "npm run dev --workspace frontend",
         "dev:frontend": "npm run dev --workspace frontend",
         "dev:backend": "npm run dev --workspace backend",
-        "lint": "npm run lint --workspaces",
+        "lint": "npm run lint:frontend && npm run lint:backend",
+        "lint:fix": "npm run lint:frontend -- --fix && npm run lint:backend -- --fix",
         "lint:frontend": "npm run lint --workspace frontend",
         "lint:backend": "npm run lint --workspace backend",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
+        "check": "npm run format:check && npm run lint",
         "prepare": "husky"
     },
     "devDependencies": {

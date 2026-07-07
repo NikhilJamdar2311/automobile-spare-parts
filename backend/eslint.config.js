@@ -8,8 +8,8 @@ module.exports = [
             ecmaVersion: 'latest',
             sourceType: 'commonjs',
             globals: {
-                ...globals.node
-            }
+                ...globals.node,
+            },
         },
 
         rules: {
@@ -17,9 +17,9 @@ module.exports = [
             'no-unused-vars': [
                 'warn',
                 {
-                    argsIgnorePattern: '^_'
-                }
-            ]
-        }
-    }
+                    argsIgnorePattern: '^_',
+                },
+            ],
+        },
+    },
 ]
