@@ -36,20 +36,20 @@ The application should manage:
 - React
 - Vite
 - JavaScript
-- Material UI *(Planned)*
+- Material UI _(Planned)_
 
 ## Backend
 
 - Node.js
-- Express.js *(Planned)*
+- Express.js _(Planned)_
 
 ## Database
 
-- PostgreSQL *(Planned)*
+- PostgreSQL _(Planned)_
 
 ## ORM
 
-- Sequelize *(Planned)*
+- Sequelize _(Planned)_
 
 ---
 
