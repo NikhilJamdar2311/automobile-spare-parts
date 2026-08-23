@@ -1,5 +1,5 @@
 const ApiError = require('../error/api-error')
-const { verifyToken } = require('../helpers/jwt.helper')
+const { verifyAccessToken } = require('../helpers/jwt.helper')
 const authRepository = require('../../modules/auth/auth.repository')
 
 async function authenticate(req, res, next) {
@@ -19,7 +19,7 @@ async function authenticate(req, res, next) {
         let decodedToken
 
         try {
-            decodedToken = verifyToken(token)
+            decodedToken = verifyAccessToken(token)
         } catch {
             throw new ApiError(401, 'Invalid or expired authentication token.')
         }

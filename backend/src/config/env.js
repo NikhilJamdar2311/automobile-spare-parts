@@ -26,6 +26,8 @@ const env = Object.freeze({
     adminPassword: requireEnv('ADMIN_PASSWORD'),
     jwtSecret: requireEnv('JWT_SECRET'),
     jwtExpiresIn: requireEnv('JWT_EXPIRES_IN'),
+    jwtRefreshSecret: requireEnv('JWT_REFRESH_SECRET'),
+    jwtRefreshExpiresIn: requireEnv('JWT_REFRESH_EXPIRES_IN'),
 })
 
 module.exports = env

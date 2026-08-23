@@ -61,4 +61,35 @@ router.post('/login', authController.login)
  */
 router.get('/me', authenticate, authorizeRoles('admin'), authController.getCurrentUser)
 
+/**
+ * @swagger
+ * /auth/refresh:
+ *   post:
+ *     summary: Refresh access token
+ *     description: Generate a new access token using a valid refresh token.
+ *     tags:
+ *       - Authentication
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - refreshToken
+ *             properties:
+ *               refreshToken:
+ *                 type: string
+ *                 description: Valid refresh token issued during login.
+ *                 example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+ *     responses:
+ *       200:
+ *         description: Access token refreshed successfully
+ *       401:
+ *         description: Refresh token is missing, invalid, expired, or associated user does not exist
+ *       403:
+ *         description: User account is deactivated
+ */
+router.post('/refresh', authController.refreshToken)
+
 module.exports = router
