@@ -22,4 +22,12 @@ module.exports = [
             ],
         },
     },
+    {
+        files: ['tests/**/*.js'],
+        languageOptions: {
+            globals: {
+                ...globals.jest,
+            },
+        },
+    },
 ]
