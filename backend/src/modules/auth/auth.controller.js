@@ -19,7 +19,20 @@ async function getCurrentUser(req, res) {
     })
 }
 
+async function refreshToken(req, res, next) {
+    try {
+        const { refreshToken } = req.body
+
+        const result = await authService.refreshAccessToken(refreshToken)
+
+        return ApiResponse.success(res, 'Access token refreshed successfully.', result)
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
     login,
     getCurrentUser,
+    refreshToken,
 }

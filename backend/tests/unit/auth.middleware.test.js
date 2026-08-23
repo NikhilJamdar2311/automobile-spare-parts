@@ -1,12 +1,12 @@
 jest.mock('../../src/common/helpers/jwt.helper', () => ({
-    verifyToken: jest.fn(),
+    verifyAccessToken: jest.fn(),
 }))
 
 jest.mock('../../src/modules/auth/auth.repository', () => ({
     findById: jest.fn(),
 }))
 
-const { verifyToken } = require('../../src/common/helpers/jwt.helper')
+const { verifyAccessToken } = require('../../src/common/helpers/jwt.helper')
 const authRepository = require('../../src/modules/auth/auth.repository')
 const authenticate = require('../../src/common/middleware/auth.middleware')
 
@@ -26,7 +26,7 @@ describe('authenticate middleware', () => {
 
         const next = jest.fn()
 
-        verifyToken.mockReturnValue({
+        verifyAccessToken.mockReturnValue({
             id: 1,
             email: 'tk@gmail.com',
             role: 'admin',
@@ -42,7 +42,7 @@ describe('authenticate middleware', () => {
 
         await authenticate(req, res, next)
 
-        expect(verifyToken).toHaveBeenCalledWith('valid-token')
+        expect(verifyAccessToken).toHaveBeenCalledWith('valid-token')
         expect(authRepository.findById).toHaveBeenCalledWith(1)
 
         expect(req.user).toEqual({
@@ -72,7 +72,7 @@ describe('authenticate middleware', () => {
         expect(error.statusCode).toBe(401)
         expect(error.message).toBe('Authentication token is required.')
 
-        expect(verifyToken).not.toHaveBeenCalled()
+        expect(verifyAccessToken).not.toHaveBeenCalled()
         expect(authRepository.findById).not.toHaveBeenCalled()
     })
 
@@ -94,7 +94,7 @@ describe('authenticate middleware', () => {
         expect(error.statusCode).toBe(401)
         expect(error.message).toBe('Invalid authentication token format.')
 
-        expect(verifyToken).not.toHaveBeenCalled()
+        expect(verifyAccessToken).not.toHaveBeenCalled()
     })
 
     test('should return 401 when bearer token is missing', async () => {
@@ -115,7 +115,7 @@ describe('authenticate middleware', () => {
         expect(error.statusCode).toBe(401)
         expect(error.message).toBe('Invalid authentication token format.')
 
-        expect(verifyToken).not.toHaveBeenCalled()
+        expect(verifyAccessToken).not.toHaveBeenCalled()
     })
 
     test('should return 401 when JWT verification fails', async () => {
@@ -127,7 +127,7 @@ describe('authenticate middleware', () => {
 
         const next = jest.fn()
 
-        verifyToken.mockImplementation(() => {
+        verifyAccessToken.mockImplementation(() => {
             throw new Error('Invalid token')
         })
 
@@ -152,7 +152,7 @@ describe('authenticate middleware', () => {
 
         const next = jest.fn()
 
-        verifyToken.mockReturnValue({
+        verifyAccessToken.mockReturnValue({
             id: 999,
         })
 
@@ -177,7 +177,7 @@ describe('authenticate middleware', () => {
 
         const next = jest.fn()
 
-        verifyToken.mockReturnValue({
+        verifyAccessToken.mockReturnValue({
             id: 1,
         })
 
