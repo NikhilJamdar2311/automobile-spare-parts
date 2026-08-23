@@ -13,6 +13,13 @@ async function login(req, res, next) {
     }
 }
 
+async function getCurrentUser(req, res) {
+    return ApiResponse.success(res, 'Current user retrieved successfully.', {
+        user: req.user,
+    })
+}
+
 module.exports = {
     login,
+    getCurrentUser,
 }
