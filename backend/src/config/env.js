@@ -21,6 +21,11 @@ const env = Object.freeze({
     port: Number(requireEnv('PORT')),
     databaseUrl: requireEnv('DATABASE_URL'),
     logLevel: requireEnv('LOG_LEVEL'),
+    adminName: requireEnv('ADMIN_NAME'),
+    adminEmail: requireEnv('ADMIN_EMAIL'),
+    adminPassword: requireEnv('ADMIN_PASSWORD'),
+    jwtSecret: requireEnv('JWT_SECRET'),
+    jwtExpiresIn: requireEnv('JWT_EXPIRES_IN'),
 })
 
 module.exports = env

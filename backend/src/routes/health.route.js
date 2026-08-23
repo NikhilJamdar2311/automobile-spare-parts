@@ -1,7 +1,7 @@
-const ApiResponse = require('../core/api-response')
+const ApiResponse = require('../common/response/api-response')
 const config = require('../config')
 const express = require('express')
-
+const { checkDatabaseHealth } = require('../database')
 const router = express.Router()
 
 /**
@@ -9,12 +9,12 @@ const router = express.Router()
  * /health:
  *   get:
  *     summary: Health Check
- *     description: Returns the health status of the application.
+ *     description: Returns the health status of the application and database.
  *     tags:
  *       - Health
  *     responses:
  *       200:
- *         description: Application is running successfully.
+ *         description: Application health status.
  *         content:
  *           application/json:
  *             schema:
@@ -29,7 +29,10 @@ const router = express.Router()
  *                 data:
  *                   type: object
  *                   properties:
- *                     status:
+ *                     application:
+ *                       type: string
+ *                       example: UP
+ *                     database:
  *                       type: string
  *                       example: UP
  *                     version:
@@ -38,13 +41,31 @@ const router = express.Router()
  *                     timestamp:
  *                       type: string
  *                       format: date-time
+ *                       example: "2026-07-26T14:30:45.123Z"
  */
-router.get('/', (req, res) => {
-    return ApiResponse.success(res, 'Health check successful.', {
-        status: 'UP',
-        version: config.application.version,
-        timestamp: new Date().toISOString(),
-    })
+
+router.get('/', async (req, res) => {
+    try {
+        await checkDatabaseHealth()
+
+        return ApiResponse.success(res, 'Health check successful.', {
+            application: 'UP',
+            database: 'UP',
+            version: config.application.version,
+            timestamp: new Date().toISOString(),
+        })
+    } catch {
+        return res.status(200).json({
+            success: false,
+            message: 'Health check failed.',
+            data: {
+                application: 'UP',
+                database: 'DOWN',
+                version: config.application.version,
+                timestamp: new Date().toISOString(),
+            },
+        })
+    }
 })
 
 // router.get("/", (req, res) => {
